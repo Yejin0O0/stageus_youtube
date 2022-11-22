@@ -4,27 +4,20 @@ import { useDispatch, useSelector } from "react-redux"
 
 import {openNav, setProfileImg} from "../../action/action"
 
-
 import Img from '../common/Img';
-import { FlexCenterDiv } from '../common/Div'
+import { FlexDiv } from '../common/Div'
 import Input from '../common/Input';
 import { Button, FlexButton } from '../common/Button';
 
 import styled from "styled-components"
 
 // == styled ==
-const Header = styled.div `
+const Header = styled(FlexDiv) `
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1;
-    height: 70px;
-    padding: 0 ;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: white;
+    background-color: ${props => props.theme.backgroundColor.white};
 `
 const SearchInput = styled(Input)`
     @media all and (min-width:480px) and (max-width:767px) {
@@ -71,21 +64,22 @@ const HeaderComponent = () => {
         const imgData = "image/unnamed.jpg"
         dispatch(setProfileImg(imgData))
         
+        
 
     },[profileData])
 
     return (
-        <Header>
+        <Header flexAttr="space-between=center" padding={0} height="70px" zIndex={1}>
             {/* menuBar & youtube Logo */}
-            <FlexCenterDiv height="inherit">
-                <FlexCenterDiv id="header-menu-div" width="85px" onClick={() => {dispatch(openNav())}}>
+            <FlexDiv flexAttr="center-center" height="inherit">
+                <FlexDiv flexAttr="center-center" id="header-menu-div" width="85px" onClick={() => {dispatch(openNav())}}>
                     <Img src="image/menu.png" width="20px" pointer></Img>
-                </FlexCenterDiv>
+                </FlexDiv>
                 <Img src="image/youtube-logo.png" height="inherit" pointer></Img>
-            </FlexCenterDiv>
+            </FlexDiv>
             
             {/* searchBar */}
-            <FlexCenterDiv width="50%">
+            <FlexDiv flexAttr="center-center" width="50%">
                 <SearchInput width="80%" height="40px" border="solid 1px #d6d6d6" 
                 padding="0 6px" fontSize="17px" placeholder="검색"/>
 
@@ -100,17 +94,17 @@ const HeaderComponent = () => {
                     <Img src="image/mic.png" width="40px" height="40px"></Img>
                 </MicButton>
 
-            </FlexCenterDiv>
+            </FlexDiv>
 
             {/* private */}
-            <FlexCenterDiv>
+            <FlexDiv flexAttr="center-center" >
                 <Img src="image/add-video.png" width="30px" padding="8px" pointer></Img>
                 <Img src="image/bell.png" width="30px" padding="8px" pointer></Img>
                 {/* <Img  width="30px" padding="8px" borderRadius="100px" pointer></Img> */}
 
                 {profileData &&
                     <Img src={profileData}  width="30px" padding="8px" borderRadius="100px" pointer></Img>}
-            </FlexCenterDiv>
+            </FlexDiv>
 
         </Header>
     )

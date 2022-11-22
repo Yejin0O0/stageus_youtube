@@ -1,6 +1,6 @@
 import styled from "styled-components"
 
-const H4 = styled.h4`
+const H1 = styled.h1`
     
     width: ${props => props.width ? props.width : 'auto'};
     height: ${props => props.height ? props.height : 'auto'};
@@ -11,4 +11,4 @@ const H4 = styled.h4`
 
 `
 
-export default H4
+export default H1

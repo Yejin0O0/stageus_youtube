@@ -1,18 +1,16 @@
 import React from 'react';
 import styled from 'styled-components'
 
-import { useDispatch, useSelector } from "react-redux"
-import { changeTab } from "../../action/action"
+import { useSelector } from "react-redux"
 
-import { Div, FlexDiv, FlexCenterColumnDiv } from '../common/Div';
-import Img from '../common/Img';
-import P from '../common/P'
+import NavItemsComponent from './children/NavItemsComponent';
+
+import { FlexDiv } from '../common/Div';
+
 
 // == styled ==
 
-const Nav = styled(Div) `
-    display: flex;
-    flex-direction: column;
+const Nav = styled(FlexDiv) `
     min-width: 72px;
     height: 100%;
     background-color: white;
@@ -39,23 +37,10 @@ const NavAfter = styled(Nav) `
     width: 15%;
 `
 
-const NavDivBefore = styled(FlexCenterColumnDiv) `
-    &:hover{  
-        background-color : #e8e8e8;
-    }
-`
-const NavDivAfter = styled(FlexDiv)`
-    flex-direction: row;
-    justify-content: start;
-    align-items: center;
-    &:hover{  
-        background-color : #e8e8e8;
-    }
-`
+
 
 const NavComponent = () => {
 
-    const dispatch = useDispatch()
 
     const NavData = [
         {
@@ -97,35 +82,27 @@ const NavComponent = () => {
 
     let is_nav_open = useSelector(state => state.is_nav_open)
 
-    if ( is_nav_open == false ) {
-        return (
-            <NavBefore>
-                {NavData.map(data => (
-                    <NavDivBefore key={data.id} 
-                        pointer width='100%' height="74px" onClick={() => {dispatch(changeTab(data.render))}}>
-                        <Img src={data.src} width="30px" height="30px" margin="0 0 4px 0"></Img>
-                        <P fontSize="12px" margin="0 10px">{data.name}</P>
-                    </NavDivBefore>
+    return (
+        <React.Fragment>
+            {is_nav_open ? 
+                <NavAfter flexAttr="==column">
+                    {NavData.map(data => (
+                        <NavItemsComponent ImgData={data} key={data.id} render={data.render}/>
+                    )) }    
+                </NavAfter>
+                :
+                <NavBefore flexAttr="==column">
+            
+                 {NavData.map(data => (
+                    <NavItemsComponent ImgData={data} key={data.id} render={data.render}/>
                 ))}    
-            </NavBefore>
-        )
+            
+                </NavBefore>
+            }
+            
+        </React.Fragment>
         
-    } else {
-        return (
-            <NavAfter>
-            
-                {NavData.map(data => (
-                    <NavDivAfter key={data.id} 
-                        pointer width='95%' height="fit-content" padding="10px 0 10px 10px"  onClick={() => {dispatch(changeTab(data.render))}}>
-                        <Img src={data.src} width="30px" height="30px" margin="0 0 4px 0"></Img>
-                        <P fontSize="12px" margin="0 10px">{data.name}</P>
-                    </NavDivAfter>
-                ))}    
-            
-            </NavAfter>
-        );
-      }
-
+    )
     
     
 }
